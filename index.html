@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="az">
 <head>
 <meta charset="UTF-8">
@@ -6,20 +7,23 @@
 <title>Nağıl Noğul — Xalq Nağılları</title>
 
 <!-- SEO -->
-<meta name="description" content="Qədim nağıllar yeni nəfəslə yenidən danışılır. Nağıl Noğul — bir xalqın yaddaşı, bir torpağın yuxusu.">
+
+<meta name="description" content="Qədim Azərbaycan nağılları yeni nəfəslə yenidən danışılır. Nağıl Noğul — bir xalqın yaddaşı, bir torpağın yuxusu.">
 
 <!-- Open Graph — link preview (WhatsApp, Telegram, Facebook, LinkedIn) -->
+
 <meta property="og:title" content="Nağıl Noğul — Xalq Nağılları">
-<meta property="og:description" content="Qədim nağıllar yeni nəfəslə yenidən danışılır. Bir xalqın yaddaşı, bir torpağın yuxusu.">
+<meta property="og:description" content="Qədim Azərbaycan nağılları yeni nəfəslə yenidən danışılır. Bir xalqın yaddaşı, bir torpağın yuxusu.">
 <meta property="og:image" content="https://fidancfr-blip.github.io/nagil-nogul/hero-image.jpeg">
 <meta property="og:url" content="https://fidancfr-blip.github.io/nagil-nogul/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="az_AZ">
 
 <!-- Twitter Card -->
+
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nağıl Noğul — Xalq Nağılları">
-<meta name="twitter:description" content="Qədim nağıllar yeni nəfəslə yenidən danışılır.">
+<meta name="twitter:description" content="Qədim Azərbaycan nağılları yeni nəfəslə yenidən danışılır.">
 <meta name="twitter:image" content="https://fidancfr-blip.github.io/nagil-nogul/hero-image.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -470,6 +474,10 @@ nav.stuck {
   transition: opacity 0.85s var(--ease-out), transform 0.85s var(--ease-out);
 }
 .story-item.visible { opacity: 1; transform: translateY(0); }
+/* Fallback: if JS fails, still show content */
+@media (prefers-reduced-motion: reduce) {
+  .story-item { opacity: 1; transform: none; }
+}
 .story-item.reverse { direction: rtl; }
 .story-item.reverse > * { direction: ltr; }
 
@@ -477,9 +485,11 @@ nav.stuck {
   position: relative;
   border-radius: var(--radius-card);
   overflow: hidden;
-  background: var(--surface);
+  background: linear-gradient(160deg, #D8C7A8 0%, #B8965A 100%);
   box-shadow: var(--shadow-card);
   aspect-ratio: 9/14;
+  width: 100%;
+  min-height: 280px;
   cursor: pointer;
   transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
 }
@@ -492,7 +502,8 @@ nav.stuck {
   box-shadow: var(--shadow-hover);
 }
 .video-card video,
-.video-card iframe {
+.video-card iframe,
+.video-card .yt-thumb {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
@@ -771,6 +782,9 @@ nav.stuck {
   border: 1px solid var(--border);
 }
 
+/* About section always visible regardless of JS */
+.about-left, .about-right { opacity: 1 !important; transform: none !important; }
+
 /* ============================================================
    ABOUT
    ============================================================ */
@@ -1015,26 +1029,65 @@ footer {
    MOBILE
    ============================================================ */
 @media (max-width: 768px) {
-  nav { padding: 0 24px; }
+  /* ── Nav ── */
+  nav { padding: 0 20px; }
   .nav-links { display: none; }
 
-  #hero { padding: 80px 20px 4rem; }
-  .hero-title { font-size: clamp(2rem, 8vw, 3.5rem); }
+  /* ── Hero ── */
+  #hero { padding: 80px 20px 4rem; min-height: 70vh; }
+  .hero-title { font-size: clamp(2rem, 9vw, 3.2rem); }
+  .hero-sub { font-size: 1rem; }
   .hero-btns { gap: 12px; }
 
-  .story-item {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  .story-item.reverse { direction: ltr; }
-  .story-text { display: none; }
-  .video-caption { display: block; }
-  .video-card { aspect-ratio: 9/14; max-width: 320px; margin: 0 auto; }
-  .video-card.active { transform: scale(1.02); }
+  /* ── Stories ── */
+  .stories-header { padding: 0 20px; }
+  .story-feed { padding: 0 20px; gap: 4rem; }
 
+  .story-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .story-item.reverse { flex-direction: column; }
+
+  .video-card {
+    width: min(280px, 80vw);
+    min-height: 360px;
+    aspect-ratio: 9/16;
+    max-width: 280px;
+    margin: 0 auto;
+    flex-shrink: 0;
+  }
+  .video-card video {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    top: 0; left: 0;
+    transform: none;
+    object-fit: cover;
+  }
+  .video-card.active { transform: none; }
+
+  .story-text {
+    display: block;
+    text-align: center;
+    padding: 0 4px;
+    width: 100%;
+  }
+  .story-meta { justify-content: center; }
+  .video-caption { display: none; }
+
+  /* ── Quote ── */
+  #quote-break { padding: 4rem 0; }
+  .quote-text { font-size: clamp(1.4rem, 6vw, 2rem); padding: 0 20px; }
+
+  /* ── About ── */
   .about-inner {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
     padding: 0 20px;
   }
   .about-left {
@@ -1042,29 +1095,36 @@ footer {
     flex-direction: column;
     align-items: center;
   }
+  .about-logo-img {
+    width: 160px;
+    height: 160px;
+    display: block;
+    margin: 0 auto 1.5rem;
+  }
   .about-stats {
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 0.8rem;
   }
   .about-stat { flex: 1; min-width: 120px; }
 
+  /* ── Footer ── */
   .footer-top { flex-direction: column; gap: 2rem; }
   .footer-tagline { max-width: 100%; }
-  .social-links { flex-direction: row; gap: 1.2rem; flex-wrap: wrap; }
+  .social-links { flex-direction: row; gap: 1rem; flex-wrap: wrap; justify-content: center; }
 
+  /* ── Misc ── */
   #scroll-progress { display: none; }
-  .story-feed { padding: 0 20px; }
-  .stories-header { padding: 0 20px; }
-  #quote-break { padding: 4rem 0; }
-  .quote-text { font-size: clamp(1.6rem, 6vw, 40px); }
 }
-
 
 @media (max-width: 480px) {
   .hero-btns { flex-direction: column; align-items: center; }
   .btn { width: 100%; max-width: 280px; justify-content: center; }
-  .story-feed { gap: 3rem; }
+  .video-card {
+    width: min(260px, 78vw);
+    min-height: 340px;
+  }
 }
 
 /* ============================================================
@@ -1264,10 +1324,12 @@ footer {
   font-family: var(--sans);
 }
 </style>
+
 </head>
 <body>
 
 <!-- Scroll Progress -->
+
 <div id="scroll-progress" aria-hidden="true">
   <div class="sp-dot active" id="dot-0"></div>
   <div class="sp-track"><div class="sp-fill" id="sp-fill"></div></div>
@@ -1276,6 +1338,7 @@ footer {
 </div>
 
 <!-- Nav -->
+
 <nav id="main-nav">
   <a href="#hero" class="nav-logo">Nağıl <span>Noğul</span></a>
   <ul class="nav-links">
@@ -1287,11 +1350,13 @@ footer {
 <!-- ============================================================
      SECTION 1 — HERO
      ============================================================ -->
+
 <section id="hero">
   <div class="hero-gradient" aria-hidden="true"></div>
   <div class="hero-depth" aria-hidden="true"></div>
 
   <!-- Top-left Azerbaijani ornament -->
+
   <div class="hero-ornament tl" aria-hidden="true">
     <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- Outer L-bracket -->
@@ -1324,6 +1389,7 @@ footer {
   </div>
 
   <!-- Bottom-right Azerbaijani ornament (mirrored) -->
+
   <div class="hero-ornament br" aria-hidden="true">
     <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M10 10 L180 10 L180 22 L22 22 L22 180 L10 180 Z" fill="#C9A15B"/>
@@ -1344,35 +1410,36 @@ footer {
     </svg>
   </div>
 
-  <canvas id="particle-canvas" aria-hidden="true"></canvas>
-
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
 
   <div class="hero-content">
     <div class="hero-eyebrow">Xalq Nağılları</div>
 
-    <h1 class="hero-title">
-      <span class="line1">Yazılan nağıllar çoxdur,</span>
-      <span class="line2">sən inanacağını dinlə.</span>
-    </h1>
+```
+<h1 class="hero-title">
+  <span class="line1">Yazılan nağıllar çoxdur,</span>
+  <span class="line2">sən inanacağını dinlə.</span>
+</h1>
 
-    <div class="hero-divider"></div>
+<div class="hero-divider"></div>
 
-    <p class="hero-sub">
-      Qədim nağılları yeni nəfəs ilə yenidən danışılır
-    </p>
+<p class="hero-sub">
+  Qədim nağılları yeni nəfəs ilə yenidən danışılır
+</p>
 
-    <div class="hero-btns">
-      <a href="#stories" class="btn btn-primary">
-        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        Nağıl aləminə daxil ol
-      </a>
-      <a href="https://open.spotify.com/show/3TlAvfIPZTgJMQFi4cKQDa?si=j76XgAxWQsaYox8dYvpAKw" target="_blank" rel="noopener" class="btn btn-secondary">
-        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 01-.973-.519.781.781 0 01.52-.973c3.633-1.102 8.147-.568 11.233 1.329a.78.78 0 01.257 1.072zm.105-2.835c-3.223-1.914-8.54-2.09-11.618-1.156a.935.935 0 11-.543-1.79c3.533-1.072 9.404-.865 13.115 1.338a.936.936 0 01-.954 1.608z"/></svg>
-        Spotify-da dinlə
-      </a>
-    </div>
+<div class="hero-btns">
+  <a href="javascript:void(0)" class="btn btn-primary" id="hero-cta-btn">
+    <svg class="btn-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    Nağıl aləminə daxil ol
+  </a>
+  <a href="https://open.spotify.com/show/3TlAvfIPZTgJMQFi4cKQDa?si=j76XgAxWQsaYox8dYvpAKw" target="_blank" rel="noopener" class="btn btn-secondary">
+    <svg class="btn-icon" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.076-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 01-.973-.519.781.781 0 01.52-.973c3.633-1.102 8.147-.568 11.233 1.329a.78.78 0 01.257 1.072zm.105-2.835c-3.223-1.914-8.54-2.09-11.618-1.156a.935.935 0 11-.543-1.79c3.533-1.072 9.404-.865 13.115 1.338a.936.936 0 01-.954 1.608z"/></svg>
+    Spotify-da dinlə
+  </a>
+</div>
+```
+
   </div>
-
 
 </section>
 
@@ -1384,6 +1451,7 @@ footer {
         right before the <div class="video-overlay"> line.
      Videos will autoplay/pause automatically via Intersection Observer.
      ============================================================ -->
+
 <div class="orn-divider" aria-hidden="true">
   <span class="orn-divider-line"></span>
   <span class="orn-divider-center">✦ &nbsp; ✦ &nbsp; ✦</span>
@@ -1398,150 +1466,131 @@ footer {
 
   <div class="story-feed">
 
-    <!-- STORY 01 — Dədə Qorqud -->
-    <div class="story-item" data-story="1">
-      <div class="video-card" data-video-index="0">
-        <div class="video-card-glow"></div>
-        <!-- REPLACE THIS PLACEHOLDER WITH YOUR VIDEO:
-             <video src="videos/dede-qorqud.mp4" muted loop playsinline></video> -->
-          <iframe id="yt-0" data-ytid="igXFMtsISmI" src="https://www.youtube.com/embed/igXFMtsISmI?autoplay=1&mute=1&loop=1&playlist=igXFMtsISmI&controls=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        <div class="video-overlay"></div>
-        <div class="video-play-hint">
-          <div class="play-hint-circle">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <div class="playing-badge">
-          <div class="eq-bars"><span></span><span></span><span></span></div>
-          Oynanır
-        </div>
-      </div>
-      <div class="story-text">
-        <h3 class="story-title">Burla Xatun</h3>
-        <p class="story-desc">
-          Oğuz dünyasının ən güclü qadını. Burla Xatun — ana sevgisini, igidliyi və sədaqəti bir ürəkdə birləşdirən əbədi bir obrazdır.
-        </p>
-        <div class="story-meta">
-          <span class="story-tag">Epik</span>
-          <span class="story-tag teal">Oğuz</span>
-          <span class="story-duration">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-            8 dəq
-          </span>
-        </div>
-      </div>
-      <div class="video-caption">
-        <h3 class="story-title">Burla Xatun</h3>
+```
+<!-- STORY 01 — Dədə Qorqud -->
+<div class="story-item" data-story="1">
+  <div class="video-card" data-video-index="0" data-yt-link="https://youtube.com/shorts/igXFMtsISmI">
+    <div class="video-card-glow"></div>
+    <video id="yt-0" src="burla-xatun.mp4" muted loop playsinline webkit-playsinline preload="metadata"></video>
+    <div class="video-overlay"></div>
+    <div class="video-play-hint">
+      <div class="play-hint-circle">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </div>
     </div>
+  </div>
+  <div class="story-text">
+    <h3 class="story-title">Burla Xatun</h3>
+    <p class="story-desc">
+      Oğuz dünyasının ən güclü qadını. Burla Xatun — ana sevgisini, igidliyi və sədaqəti bir ürəkdə birləşdirən əbədi bir obrazdır.
+    </p>
+    <div class="story-meta">
+      <span class="story-tag">Epik</span>
+      <span class="story-tag teal">Oğuz</span>
+      <span class="story-duration">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+        8 dəq
+      </span>
+    </div>
+  </div>
+  <div class="video-caption">
+    <h3 class="story-title">Burla Xatun</h3>
+  </div>
+</div>
 
-    <!-- STORY 02 — Bamsı Beyrək -->
-    <div class="story-item reverse" data-story="2">
-      <div class="video-card" data-video-index="1">
-        <div class="video-card-glow"></div>
-        <!-- REPLACE: <video src="videos/bamsi-beyrek.mp4" muted loop playsinline></video> -->
-          <iframe id="yt-1" data-ytid="Qu8F_Gj0rCo" src="https://www.youtube.com/embed/Qu8F_Gj0rCo?autoplay=1&mute=1&loop=1&playlist=Qu8F_Gj0rCo&controls=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        <div class="video-overlay"></div>
-        <div class="video-play-hint">
-          <div class="play-hint-circle">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <div class="playing-badge">
-          <div class="eq-bars"><span></span><span></span><span></span></div>
-          Oynanır
-        </div>
-      </div>
-      <div class="story-text">
-        <h3 class="story-title">Göyçək Fatma</h3>
-        <p class="story-desc">
-          Gözəlliyi ilə deyil, ürəyinin dərinliyi ilə seçilən bir qadın. Göyçək Fatmanın hekayəsi — sevginin, səbrin və daxili gücün nağılıdır.
-        </p>
-        <div class="story-meta">
-          <span class="story-tag">Sevgi</span>
-          <span class="story-tag teal">Xalq</span>
-          <span class="story-duration">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-            11 dəq
-          </span>
-        </div>
-      </div>
-      <div class="video-caption">
-        <h3 class="story-title">Göyçək Fatma</h3>
+<!-- STORY 02 — Bamsı Beyrək -->
+<div class="story-item reverse" data-story="2">
+  <div class="video-card" data-video-index="1" data-yt-link="https://youtube.com/shorts/Qu8F_Gj0rCo">
+    <div class="video-card-glow"></div>
+    <video id="yt-1" src="goychek-fatma.mp4" muted loop playsinline webkit-playsinline preload="metadata"></video>
+    <div class="video-overlay"></div>
+    <div class="video-play-hint">
+      <div class="play-hint-circle">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </div>
     </div>
+  </div>
+  <div class="story-text">
+    <h3 class="story-title">Göyçək Fatma</h3>
+    <p class="story-desc">
+      Gözəlliyi ilə deyil, ürəyinin dərinliyi ilə seçilən bir qadın. Göyçək Fatmanın hekayəsi — sevginin, səbrin və daxili gücün nağılıdır.
+    </p>
+    <div class="story-meta">
+      <span class="story-tag">Sevgi</span>
+      <span class="story-tag teal">Xalq</span>
+      <span class="story-duration">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+        11 dəq
+      </span>
+    </div>
+  </div>
+  <div class="video-caption">
+    <h3 class="story-title">Göyçək Fatma</h3>
+  </div>
+</div>
 
-    <!-- STORY 03 — Koroğlu -->
-    <div class="story-item" data-story="3">
-      <div class="video-card" data-video-index="2">
-        <div class="video-card-glow"></div>
-        <!-- REPLACE: <video src="videos/koroglu.mp4" muted loop playsinline></video> -->
-          <iframe id="yt-2" data-ytid="NAs6owVg4Cw" src="https://www.youtube.com/embed/NAs6owVg4Cw?autoplay=1&mute=1&loop=1&playlist=NAs6owVg4Cw&controls=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        <div class="video-overlay"></div>
-        <div class="video-play-hint">
-          <div class="play-hint-circle">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <div class="playing-badge">
-          <div class="eq-bars"><span></span><span></span><span></span></div>
-          Oynanır
-        </div>
-      </div>
-      <div class="story-text">
-        <h3 class="story-title">Şəngülüm, Şüngülüm, Məngülüm</h3>
-        <p class="story-desc">
-          Üç bacının macərası, bir ananın həsrəti. Bu nağıl — sadəlövhlük, hiylə və sevginin bir-birinə dolaşdığı kövrək bir dünya rəsmidir.
-        </p>
-        <div class="story-meta">
-          <span class="story-tag">Uşaq</span>
-          <span class="story-tag teal">Nağıl</span>
-          <span class="story-duration">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-            14 dəq
-          </span>
-        </div>
-      </div>
-      <div class="video-caption">
-        <h3 class="story-title">Şəngülüm, Şüngülüm, Məngülüm</h3>
+<!-- STORY 03 — Koroğlu -->
+<div class="story-item" data-story="3">
+  <div class="video-card" data-video-index="2" data-yt-link="https://youtube.com/shorts/NAs6owVg4Cw">
+    <div class="video-card-glow"></div>
+    <video id="yt-2" src="sengulum.mp4" muted loop playsinline webkit-playsinline preload="metadata"></video>
+    <div class="video-overlay"></div>
+    <div class="video-play-hint">
+      <div class="play-hint-circle">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </div>
     </div>
+  </div>
+  <div class="story-text">
+    <h3 class="story-title">Şəngülüm, Şüngülüm, Məngülüm</h3>
+    <p class="story-desc">
+      Üç quzunun macərası, bir ananın həsrəti. Bu nağıl — sadəlövhlük, hiylə və sevginin bir-birinə dolaşdığı kövrək bir dünya rəsmidir.
+    </p>
+    <div class="story-meta">
+      <span class="story-tag">Uşaq</span>
+      <span class="story-tag teal">Nağıl</span>
+      <span class="story-duration">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+        14 dəq
+      </span>
+    </div>
+  </div>
+  <div class="video-caption">
+    <h3 class="story-title">Şəngülüm, Şüngülüm, Məngülüm</h3>
+  </div>
+</div>
 
-    <!-- STORY 04 — Asli və Kərəm -->
-    <div class="story-item reverse" data-story="4">
-      <div class="video-card" data-video-index="3">
-        <div class="video-card-glow"></div>
-        <!-- REPLACE: <video src="videos/asli-kerem.mp4" muted loop playsinline></video> -->
-          <iframe id="yt-3" data-ytid="0kdxwGbWyK0" src="https://www.youtube.com/embed/0kdxwGbWyK0?autoplay=1&mute=1&loop=1&playlist=0kdxwGbWyK0&controls=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        <div class="video-overlay"></div>
-        <div class="video-play-hint">
-          <div class="play-hint-circle">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <div class="playing-badge">
-          <div class="eq-bars"><span></span><span></span><span></span></div>
-          Oynanır
-        </div>
-      </div>
-      <div class="story-text">
-        <h3 class="story-title">Bamsı Beyrək</h3>
-        <p class="story-desc">
-          Sevgi, sədaqət və qəhrəmanlıq hekayəsi. Bamsı Beyrəyin macərası — Oğuz dünyasının ən sevimli eposlarından birinin vizual canlanmasıdır.
-        </p>
-        <div class="story-meta">
-          <span class="story-tag">Eşq</span>
-          <span class="story-tag teal">Epos</span>
-          <span class="story-duration">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-            9 dəq
-          </span>
-        </div>
-      </div>
-      <div class="video-caption">
-        <h3 class="story-title">Bamsı Beyrək</h3>
+<!-- STORY 04 — Asli və Kərəm -->
+<div class="story-item reverse" data-story="4">
+  <div class="video-card" data-video-index="3" data-yt-link="https://youtube.com/shorts/0kdxwGbWyK0">
+    <div class="video-card-glow"></div>
+    <video id="yt-3" src="bamsi-beyrek.mp4" muted loop playsinline webkit-playsinline preload="metadata"></video>
+    <div class="video-overlay"></div>
+    <div class="video-play-hint">
+      <div class="play-hint-circle">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       </div>
     </div>
+  </div>
+  <div class="story-text">
+    <h3 class="story-title">Bamsı Beyrək</h3>
+    <p class="story-desc">
+      Sevgi, sədaqət və qəhrəmanlıq hekayəsi. Bamsı Beyrəyin macərası — Oğuz dünyasının ən sevimli eposlarından birinin vizual canlanmasıdır.
+    </p>
+    <div class="story-meta">
+      <span class="story-tag">Eşq</span>
+      <span class="story-tag teal">Epos</span>
+      <span class="story-duration">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+        9 dəq
+      </span>
+    </div>
+  </div>
+  <div class="video-caption">
+    <h3 class="story-title">Bamsı Beyrək</h3>
+  </div>
+</div>
+```
 
   </div><!-- /.story-feed -->
 
@@ -1570,6 +1619,7 @@ footer {
 <!-- ============================================================
      SECTION 3 — ABOUT
      ============================================================ -->
+
 <div class="orn-divider" aria-hidden="true">
   <span class="orn-divider-line"></span>
   <span class="orn-divider-center">✦ &nbsp; ✦ &nbsp; ✦</span>
@@ -1578,52 +1628,56 @@ footer {
 
 <section id="about">
   <div class="about-inner">
-    <div class="about-left reveal">
+    <div class="about-left">
       <div class="section-tag">Haqqımızda</div>
 
-      <!-- LOGO IMAGE -->
-      <img src="hero-image.jpeg" alt="Nağıl Noğul" class="about-logo-img">
+```
+  <!-- LOGO IMAGE -->
+  <img src="hero-image.jpeg" alt="Nağıl Noğul" class="about-logo-img">
 
 
-      <div class="about-stats">
-        <div class="about-stat">
-          <span class="stat-num">12+</span>
-          <span class="stat-label">Nağıl canlandırıldı</span>
-        </div>
-        <div class="about-stat">
-          <span class="stat-num">5</span>
-          <span class="stat-label">Platforma</span>
-        </div>
-        <div class="about-stat">
-          <span class="stat-num">∞</span>
-          <span class="stat-label">Yaddaş yaşayır</span>
-        </div>
-      </div>
+  <div class="about-stats">
+    <div class="about-stat">
+      <span class="stat-num">12+</span>
+      <span class="stat-label">Nağıl canlandırıldı</span>
     </div>
-
-    <div class="about-right reveal reveal-delay-2">
-      <h2 class="section-heading">Qədim ruh, müasir toxunuş</h2>
-      <div class="about-body">
-        <p>
-          Biri var idi, biri yox idi... Əslində, onlar həmişə var idilər. Əsrlər boyu ocaq istisində isinən, nəsillərin yaddaşına pıçıldanan, nənələrin duaları tək saflaşan o qədim hekayələr heç vaxt yox olmadılar. Onlar sadəcə zamanın sükutuna çəkilib, yenidən doğulacaqları günü gözlədilər.
-        </p>
-        <p>
-          <em>Nağıl Noğul,</em> həmin sükutun bitdiyi nöqtədir.
-        </p>
-        <p>
-          Biz qədim nağıl irsini tozlu rəflərdən alıb, gələcəyin dili ilə yenidən canlandırdıq. Bu hekayələrin mayasında insan zəkası ilə süni intellektin harmoniyası dayansa da, ruhu eynidir: doğma, isti və dərin.
-        </p>
-        <p>
-          Çünki biz bilirik ki, texnologiya nə qədər dəyişsə də, <strong>bir xalqın yaddaşı və torpağın yuxusu olan o sehrli məna heç vaxt köhnəlmir.</strong>
-        </p>
-      </div>
+    <div class="about-stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Platforma</span>
     </div>
+    <div class="about-stat">
+      <span class="stat-num">∞</span>
+      <span class="stat-label">Yaddaş yaşayır</span>
+    </div>
+  </div>
+</div>
+
+<div class="about-right">
+  <h2 class="section-heading">Qədim ruh, müasir toxunuş</h2>
+  <div class="about-body">
+    <p>
+      Biri var idi, biri yox idi... Əslində, onlar həmişə var idilər. Əsrlər boyu ocaq istisində isinən, nəsillərin yaddaşına pıçıldanan, nənələrin duaları tək saflaşan o qədim hekayələr heç vaxt yox olmadılar. Onlar sadəcə zamanın sükutuna çəkilib, yenidən doğulacaqları günü gözlədilər.
+    </p>
+    <p>
+      <em>Nağıl Noğul,</em> həmin sükutun bitdiyi nöqtədir.
+    </p>
+    <p>
+      Biz qədim nağıl irsini tozlu rəflərdən alıb, gələcəyin dili ilə yenidən canlandırdıq. Bu hekayələrin mayasında insan zəkası ilə süni intellektin harmoniyası dayansa da, ruhu eynidir: doğma, isti və dərin.
+    </p>
+    <p>
+      Çünki biz bilirik ki, texnologiya nə qədər dəyişsə də, <strong>bir xalqın yaddaşı və torpağın yuxusu olan o sehrli məna heç vaxt köhnəlmir.</strong>
+    </p>
+  </div>
+</div>
+```
+
   </div>
 </section>
 
 <!-- ============================================================
      SECTION 4 — FOOTER
      ============================================================ -->
+
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -1667,6 +1721,7 @@ footer {
 <!-- ============================================================
      JAVASCRIPT
      ============================================================ -->
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -1680,147 +1735,178 @@ document.addEventListener('DOMContentLoaded', function() {
 
   /* ── Scroll progress ── */
   var spFill = document.getElementById('sp-fill');
-  var sections = ['hero','stories','about'];
-  var dots = [
-    document.getElementById('dot-0'),
-    document.getElementById('dot-1'),
-    document.getElementById('dot-2'),
-  ];
-
   if (spFill) {
+    var dots = [
+      document.getElementById('dot-0'),
+      document.getElementById('dot-1'),
+      document.getElementById('dot-2')
+    ];
+    var sectionIds = ['hero', 'stories', 'about'];
     window.addEventListener('scroll', function() {
       var total = document.documentElement.scrollHeight - window.innerHeight;
       var pct = total > 0 ? (window.scrollY / total) * 100 : 0;
       spFill.style.height = pct + '%';
-      sections.forEach(function(id, i) {
+      sectionIds.forEach(function(id, i) {
         var el = document.getElementById(id);
         if (!el || !dots[i]) return;
         var rect = el.getBoundingClientRect();
-        var active = rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
-        dots[i].classList.toggle('active', active);
+        dots[i].classList.toggle('active',
+          rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2);
       });
     }, { passive: true });
   }
 
   /* ── Particles ── */
   var canvas = document.getElementById('particle-canvas');
-  if (canvas) {
+  if (canvas && canvas.getContext) {
     var ctx = canvas.getContext('2d');
     var W, H, pts = [];
-
     function resize() {
       W = canvas.width = canvas.offsetWidth;
       H = canvas.height = canvas.offsetHeight;
     }
     window.addEventListener('resize', resize, { passive: true });
     resize();
-
     function mkPt() {
-      var dur = 20000 + Math.random() * 20000;
       return {
         x: Math.random() * W,
         y: H + Math.random() * 20,
         r: Math.random() * 1.5 + 0.5,
         vx: (Math.random() - 0.5) * 0.12,
-        vy: -(H / dur * 16),
+        vy: -(H / (25000 + Math.random() * 20000) * 16),
         alpha: Math.random() * 0.18 + 0.04,
-        fade: 0.00008 + Math.random() * 0.00006,
+        fade: 0.00008 + Math.random() * 0.00006
       };
     }
-
-    for (var i = 0; i < 35; i++) {
-      var p = mkPt();
-      p.y = Math.random() * H;
-      pts.push(p);
-    }
-
+    for (var i = 0; i < 35; i++) { var p = mkPt(); p.y = Math.random() * H; pts.push(p); }
     function tick() {
       ctx.clearRect(0, 0, W, H);
-      pts.forEach(function(p, i) {
-        p.x += p.vx;
-        p.y += p.vy;
-        p.alpha -= p.fade;
-        if (p.alpha <= 0 || p.y < -6) { pts[i] = mkPt(); return; }
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i];
+        p.x += p.vx; p.y += p.vy; p.alpha -= p.fade;
+        if (p.alpha <= 0 || p.y < -6) { pts[i] = mkPt(); continue; }
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(201,161,91,' + p.alpha + ')';
         ctx.fill();
-      });
+      }
       requestAnimationFrame(tick);
     }
     tick();
   }
 
-  /* ── Generic reveal ── */
+  /* ── Show all reveals immediately ── */
   var revealEls = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    var revealObs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          revealObs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    revealEls.forEach(function(el) { revealObs.observe(el); });
-  } else {
+  function showAllReveals() {
     revealEls.forEach(function(el) { el.classList.add('visible'); });
   }
 
-  /* ── Story item reveal ── */
-  var storyItems = document.querySelectorAll('.story-item');
-  if ('IntersectionObserver' in window) {
-    var storyObs = new IntersectionObserver(function(entries) {
+  if (window.innerWidth <= 768) {
+    showAllReveals();
+  } else if ('IntersectionObserver' in window) {
+    var revObs = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          storyObs.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
       });
-    }, { threshold: 0.1 });
-    storyItems.forEach(function(el) { storyObs.observe(el); });
+    }, { threshold: 0.08 });
+    revealEls.forEach(function(el) { revObs.observe(el); });
+    setTimeout(showAllReveals, 1500);
+  } else {
+    showAllReveals();
   }
 
-  /* ── Video autoplay ── */
+  /* ── Story items reveal ── */
+  var storyItems = document.querySelectorAll('.story-item');
+  if (window.innerWidth <= 768) {
+    storyItems.forEach(function(el) { el.classList.add('visible'); });
+  } else if ('IntersectionObserver' in window) {
+    var stObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); stObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    storyItems.forEach(function(el) { stObs.observe(el); });
+  } else {
+    storyItems.forEach(function(el) { el.classList.add('visible'); });
+  }
+
+  /* ── Video: iOS unlock + autoplay on scroll ── */
   var videoCards = document.querySelectorAll('.video-card');
+  var allVids = document.querySelectorAll('video');
+
+  // iOS unlock on first touch
+  var unlocked = false;
+  function unlockIOS() {
+    if (unlocked) return;
+    unlocked = true;
+    allVids.forEach(function(v) {
+      v.load();
+      v.play().then(function() { v.pause(); }).catch(function() {});
+    });
+  }
+  document.addEventListener('touchstart', unlockIOS, { once: true, passive: true });
+  document.addEventListener('click', unlockIOS, { once: true });
+
+  // onerror: fallback to YouTube embed
+  allVids.forEach(function(vid) {
+    var card = vid.closest('.video-card');
+    if (!card) return;
+    var ytLink = card.getAttribute('data-yt-link') || '';
+    var ytId = ytLink.split('/').pop();
+    if (!ytId) return;
+    vid.addEventListener('error', function() {
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/' + ytId +
+        '?autoplay=1&mute=1&loop=1&playlist=' + ytId + '&controls=0&playsinline=1';
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'autoplay; encrypted-media');
+      iframe.style.cssText = 'position:absolute;top:50%;left:50%;' +
+        'transform:translate(-50%,-50%);width:120%;height:120%;' +
+        'object-fit:cover;border:none;border-radius:inherit;';
+      if (vid.parentNode) vid.parentNode.replaceChild(iframe, vid);
+    });
+  });
+
+  // IntersectionObserver for play/pause
   if ('IntersectionObserver' in window) {
-    var videoObs = new IntersectionObserver(function(entries) {
+    var vidObs = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
-        var card = entry.target;
-        var video = card.querySelector('video');
+        var vid = entry.target.querySelector('video');
         if (entry.isIntersecting) {
-          card.classList.add('active');
-          if (video) video.play().catch(function() {});
+          entry.target.classList.add('active');
+          if (vid) vid.play().catch(function() {});
         } else {
-          card.classList.remove('active');
-          if (video) video.pause();
+          entry.target.classList.remove('active');
+          if (vid && !vid.paused) vid.pause();
         }
       });
-    }, { threshold: 0.45, rootMargin: '-5% 0px -5% 0px' });
-    videoCards.forEach(function(c) { videoObs.observe(c); });
+    }, { threshold: 0.3 });
+    videoCards.forEach(function(c) { vidObs.observe(c); });
   }
 
   /* ── Video click → YouTube Shorts ── */
-  var ytLinks = {
-    'yt-0': 'https://youtube.com/shorts/igXFMtsISmI',
-    'yt-1': 'https://youtube.com/shorts/Qu8F_Gj0rCo',
-    'yt-2': 'https://youtube.com/shorts/NAs6owVg4Cw',
-    'yt-3': 'https://youtube.com/shorts/0kdxwGbWyK0',
-  };
-
   videoCards.forEach(function(card) {
     card.style.cursor = 'pointer';
     card.addEventListener('click', function() {
-      var iframe = card.querySelector('iframe');
-      if (!iframe) return;
-      var link = ytLinks[iframe.id];
+      var link = card.getAttribute('data-yt-link');
       if (link) window.open(link, '_blank');
     });
   });
 
+  /* ── Hero CTA scroll ── */
+  var heroCta = document.getElementById('hero-cta-btn');
+  if (heroCta) {
+    heroCta.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.getElementById('stories');
+      if (!target) return;
+      var top = target.getBoundingClientRect().top + window.pageYOffset - 60;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  }
+
 });
 </script>
-
 
 </body>
 </html>
