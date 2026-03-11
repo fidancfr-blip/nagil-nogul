@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nağıl Noğul — Xalq Nağılları</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --bg:          #F4F6FA;
+  --bg-warm:     #F9F7F4;
+  --surface:     #FFFFFF;
+  --border:      #E2E8F0;
+  --border-soft: #EEF2F7;
+  --primary:     #1A2A44;
+  --primary-dark:#0F1B2D;
+  --text-1:      #0F172A;
+  --text-2:      #475569;
+  --text-3:      #94A3B8;
+  --gold:        #C9A15B;
+  --gold-light:  #E8C98A;
+  --gold-pale:   #FBF5EA;
+  --teal:        #C9A15B;
+  --teal-light:  #D4AA6A;
+  --teal-pale:   #F5EFE3;
+  --serif:       'Playfair Display', Georgia, serif;
+  --sans:        'Inter', system-ui, sans-serif;
+  --radius-card: 18px;
+  --shadow-card: 0 20px 60px rgba(0,0,0,0.08);
+  --shadow-hover: 0 32px 80px rgba(0,0,0,0.13);
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img, video { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+/* ============================================================
+   SCROLL PROGRESS INDICATOR
+   ============================================================ */
+#scroll-progress {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.sp-track {
+  width: 1px;
+  height: 80px;
+  background: var(--border);
+  border-radius: 1px;
+  position: relative;
+  overflow: hidden;
+}
+.sp-fill {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  background: linear-gradient(to bottom, var(--gold), #B8893E);
+  height: 0%;
+  transition: height 0.1s linear;
+  border-radius: 1px;
+}
+.sp-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.3s;
+}
+.sp-dot.active { background: var(--gold); }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 900;
+  height: 72px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+  transition: background 0.4s, box-shadow 0.4s;
+}
+nav.stuck {
+  background: rgba(244,246,250,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 var(--border);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: 0.2px;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  transition: color 0.25s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  padding: 80px 32px 5rem;
+}
+
+/* Parchment base */
+.hero-gradient {
+  position: absolute; inset: 0;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 80% 60% at 15% 15%, rgba(201,161,91,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 70% at 85% 85%, rgba(184,137,62,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(248,244,235,0.4) 0%, transparent 70%),
+    #F4F6FA;
+}
+
+/* Subtle depth / book glow layer behind content */
+.hero-depth {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 55% 45% at 50% 52%, rgba(201,161,91,0.045) 0%, transparent 65%);
+  animation: depthPulse 8s ease-in-out infinite alternate;
+}
+@keyframes depthPulse {
+  0%   { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* ── Corner ornaments ── */
+.hero-ornament {
+  position: absolute;
+  width: 380px; height: 380px;
+  pointer-events: none;
+  opacity: 0.032;
+  filter: blur(14px);
+  z-index: 1;
+}
+.hero-ornament.tl {
+  top: -30px; left: -30px;
+  animation: floatOrn 18s ease-in-out infinite alternate;
+}
+.hero-ornament.br {
+  bottom: -30px; right: -30px;
+  animation: floatOrnBr 20s ease-in-out infinite alternate;
+}
+.hero-ornament svg { width: 100%; height: 100%; }
+
+@keyframes floatOrn {
+  0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50%  { transform: translate(10px, 14px) rotate(1.5deg) scale(1.02); }
+  100% { transform: translate(-6px, 7px) rotate(-1deg) scale(0.99); }
+}
+@keyframes floatOrnBr {
+  0%   { transform: rotate(180deg) translate(0, 0) scale(1); }
+  50%  { transform: rotate(181.5deg) translate(9px, 11px) scale(1.02); }
+  100% { transform: rotate(179deg) translate(-5px, 5px) scale(0.99); }
+}
+
+#particle-canvas {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-rule {
+  position: absolute;
+  left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent 0%, #C9A15B 50%, transparent 100%);
+  opacity: 0.10;
+}
+.hero-rule.top    { top: 110px; }
+.hero-rule.bottom { bottom: 80px; }
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: #B8893E;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s var(--ease-out) forwards;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 48px; height: 1px;
+  background: #D8C7A8;
+}
+
+/* Title lines animate separately */
+.hero-title {
+  font-family: var(--serif);
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-1);
+  margin-bottom: 0;
+}
+.hero-title .line1 {
+  display: block;
+  opacity: 0;
+  animation: fadeUp 1s 0.5s var(--ease-out) forwards;
+}
+.hero-title .line2 {
+  display: block;
+  font-style: italic;
+  color: var(--gold);
+  margin-top: 6px;
+  opacity: 0;
+  animation: revealLine2 1.4s 1.2s var(--ease-out) forwards;
+}
+@keyframes revealLine2 {
+  0%   { opacity: 0; transform: translateY(12px); letter-spacing: 0.08em; }
+  60%  { opacity: 0.8; }
+  100% { opacity: 1; transform: translateY(0); letter-spacing: -0.01em; }
+}
+
+.hero-sub {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text-2);
+  max-width: 520px;
+  margin: 28px auto 36px;
+  line-height: 1.6;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.8s var(--ease-out) forwards;
+}
+
+.hero-divider { display: none; }
+
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 2.1s var(--ease-out) forwards;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  height: 52px;
+  padding: 0 26px;
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 14px;
+  cursor: pointer;
+  border: none;
+  transition: transform 300ms ease-out, box-shadow 300ms ease-out, background 280ms ease-out;
+}
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  background: #1A2A44;
+  color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(26,42,68,0.14);
+  transition: transform 300ms ease, box-shadow 300ms ease, background-color 300ms ease;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: #142238;
+  box-shadow: 0 16px 40px rgba(26,42,68,0.18), 0 0 24px rgba(201,161,91,0.25);
+}
+.btn-primary::before {
+  content: "";
+  position: absolute; top: 0; left: -120%;
+  width: 60%; height: 100%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(201,161,91,0.00) 20%,
+    rgba(201,161,91,0.22) 50%,
+    rgba(201,161,91,0.00) 80%,
+    transparent 100%
+  );
+  transition: left 550ms ease;
+}
+.btn-primary:hover::before { left: 140%; }
+
+.btn-secondary {
+  background: transparent;
+  color: #1A2A44;
+  border: 1px solid #1A2A44;
+  box-shadow: none;
+}
+.btn-secondary:hover {
+  background: rgba(26,42,68,0.06);
+  box-shadow: none;
+}
+
+.btn-icon {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 2rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  opacity: 0;
+  animation: fadeIn 1s 1.8s forwards;
+  z-index: 2;
+}
+.hero-scroll-hint span {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #B8893E;
+}
+.scroll-arrow {
+  width: 1px; height: 36px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(1.2); }
+}
+
+/* ============================================================
+   SECTION SHARED
+   ============================================================ */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #B8893E;
+  margin-bottom: 1rem;
+}
+.section-tag::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: #D8C7A8;
+}
+
+.section-heading {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--text-1);
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   STORY FEED
+   ============================================================ */
+#stories {
+  padding: 100px 0 7rem;
+  background: var(--bg);
+}
+
+.stories-header {
+  text-align: center;
+  margin-bottom: 4.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 2rem;
+}
+.stories-header .section-heading { margin-bottom: 0.75rem; }
+.stories-header p {
+  font-style: italic;
+  color: var(--text-2);
+  font-size: 1.05rem;
+}
+
+.story-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.story-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.85s var(--ease-out), transform 0.85s var(--ease-out);
+}
+.story-item.visible { opacity: 1; transform: translateY(0); }
+.story-item.reverse { direction: rtl; }
+.story-item.reverse > * { direction: ltr; }
+
+.video-card {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  aspect-ratio: 9/14;
+  cursor: pointer;
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+}
+.video-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: var(--shadow-hover);
+}
+.video-card.active {
+  transform: scale(1.03);
+  box-shadow: var(--shadow-hover);
+}
+.video-card video,
+.video-card iframe {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  object-fit: cover;
+  border: none;
+  border-radius: var(--radius-card);
+}
+
+.video-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15,23,42,0.45) 0%,
+    rgba(15,23,42,0.08) 40%,
+    transparent 70%
+  );
+  z-index: 1;
+  transition: opacity 0.5s;
+}
+.video-card.active .video-overlay { opacity: 0.7; }
+
+/* Mute toggle button */
+.mute-btn {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  z-index: 10;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(15,23,42,0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.mute-btn:hover {
+  background: rgba(201,161,91,0.8);
+  transform: scale(1.1);
+}
+.mute-btn svg { width: 16px; height: 16px; fill: #fff; pointer-events: none; }
+.mute-btn .icon-muted   { display: block; }
+.mute-btn .icon-unmuted { display: none; }
+.mute-btn.unmuted .icon-muted   { display: none; }
+.mute-btn.unmuted .icon-unmuted { display: block; }
+
+/* Glow ring on hover */
+.video-card-glow {
+  position: absolute; inset: -3px;
+  border-radius: calc(var(--radius-card) + 3px);
+  background: linear-gradient(135deg, var(--gold-light), var(--teal-light));
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.45s;
+  pointer-events: none;
+}
+.video-card:hover .video-card-glow { opacity: 0.55; }
+
+.playing-badge {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 100px;
+  padding: 4px 10px 4px 8px;
+  font-size: 0.62rem;
+  font-family: var(--sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.video-card.active .playing-badge { opacity: 1; transform: scale(1); }
+.eq-bars {
+  display: flex; align-items: flex-end; gap: 2px; height: 12px;
+}
+.eq-bars span {
+  width: 2px;
+  background: var(--gold-light);
+  border-radius: 1px;
+  animation: eq 0.6s infinite alternate;
+  transform-origin: bottom;
+}
+.eq-bars span:nth-child(1) { height: 5px;  animation-duration: 0.5s; }
+.eq-bars span:nth-child(2) { height: 10px; animation-duration: 0.35s; animation-delay: 0.1s; }
+.eq-bars span:nth-child(3) { height: 7px;  animation-duration: 0.55s; animation-delay: 0.05s; }
+@keyframes eq {
+  from { transform: scaleY(0.3); }
+  to   { transform: scaleY(1); }
+}
+
+.story-text {}
+.story-num {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.story-title {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.8vw, 2rem);
+  font-weight: 500;
+  color: var(--text-1);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.story-desc {
+  font-size: 0.95rem;
+  color: var(--text-2);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+.story-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+.story-tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  background: var(--gold-pale);
+  color: var(--gold);
+  border: 1px solid rgba(201,161,91,0.2);
+}
+.story-tag.teal {
+  background: #F5EFE3;
+  color: #B8893E;
+  border-color: rgba(184,137,62,0.2);
+}
+.story-duration {
+  font-size: 0.75rem;
+  color: #B8893E;
+  display: flex; align-items: center; gap: 5px;
+}
+.story-duration svg { width: 12px; height: 12px; fill: var(--text-3); }
+
+.video-caption {
+  display: none;
+  text-align: center;
+  margin-top: 1rem;
+}
+.video-caption .story-num { margin-bottom: 0.3rem; }
+.video-caption .story-title { font-size: 1.2rem; }
+
+/* ============================================================
+   QUOTE BREAK
+   ============================================================ */
+#quote-break {
+  padding: 6rem 0;
+  background: var(--bg-warm);
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Radial light behind quote — 2–3% opacity */
+#quote-break::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse at center, rgba(201,161,91,0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.quote-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.quote-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #B8893E;
+  margin-bottom: 2rem;
+}
+
+.quote-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 1.8rem;
+}
+.quote-ornament-line {
+  width: 48px; height: 1px;
+  background: linear-gradient(to right, transparent, #D8C7A8);
+}
+.quote-ornament-line.right {
+  background: linear-gradient(to left, transparent, #D8C7A8);
+}
+.quote-ornament-star {
+  color: var(--gold);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.quote-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 40px;
+  font-weight: 400;
+  color: #1A2A44;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  margin-bottom: 0;
+}
+
+.quote-attr {
+  display: none;
+}
+
+/* Logo upload placeholder */
+.about-logo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 120px; height: 120px;
+  border: 1.5px dashed var(--gold);
+  border-radius: 16px;
+  color: var(--gold);
+  opacity: 0.5;
+  margin-top: 1.5rem;
+  cursor: default;
+  transition: opacity 0.3s;
+}
+.about-logo-placeholder:hover { opacity: 0.8; }
+.about-logo-placeholder svg { width: 28px; height: 28px; }
+.about-logo-placeholder span {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--sans);
+}
+.about-logo-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-top: 1.5rem;
+  display: block;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  border: 1px solid var(--border);
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+#about {
+  padding: 120px 0 7rem;
+  background: var(--bg);
+}
+
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 5rem;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.about-emblem {
+  width: 100%;
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, var(--gold-pale), var(--teal-pale));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  max-width: 200px;
+}
+.about-emblem::before {
+  content: '';
+  position: absolute; inset: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,161,91,0.3);
+}
+.about-emblem-text {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+  text-align: center;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+.about-emblem-text small {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #B8893E;
+  font-family: var(--sans);
+  margin-top: 0.4rem;
+  font-weight: 500;
+}
+
+.about-stats {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.about-stat {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.2rem;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.about-stat:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 20px rgba(201,161,91,0.08);
+}
+.stat-num {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  min-width: 2.5rem;
+}
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-2);
+  font-style: italic;
+}
+
+.about-right .section-heading { margin-bottom: 1.5rem; }
+.about-body {
+  font-size: 1.02rem;
+  color: var(--text-2);
+  line-height: 1.9;
+  font-weight: 300;
+}
+.about-body p {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--text-2);
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+.about-body p:last-child { margin-bottom: 0; }
+.about-body em { font-style: italic; color: var(--text-1); }
+.about-body strong { color: var(--gold); font-weight: 400; }
+
+.about-feature-list {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.about-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  color: var(--text-2);
+}
+.feature-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #B8893E;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--text-1);
+  color: rgba(255,255,255,0.7);
+  padding: 4rem 0 2.5rem;
+}
+
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.footer-logo {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.6rem;
+}
+.footer-logo span { color: var(--gold); }
+.footer-tagline {
+  font-style: italic;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.6;
+  max-width: 240px;
+}
+
+.footer-social-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 1rem;
+}
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  transition: color 0.25s, transform 0.25s;
+}
+.social-link:hover { color: var(--gold); transform: translateX(4px); }
+.social-link svg {
+  width: 16px; height: 16px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.footer-copy {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.04em;
+}
+.footer-craft {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.2);
+  font-style: italic;
+}
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+
+  #hero { padding: 80px 20px 4rem; }
+  .hero-title { font-size: clamp(2rem, 8vw, 3.5rem); }
+  .hero-btns { gap: 12px; }
+
+  .story-item {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .story-item.reverse { direction: ltr; }
+  .story-text { display: none; }
+  .video-caption { display: block; }
+  .video-card { aspect-ratio: 9/14; max-width: 320px; margin: 0 auto; }
+  .video-card.active { transform: scale(1.02); }
+
+  .about-inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 0 20px;
+  }
+  .about-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .about-stats {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .about-stat { flex: 1; min-width: 120px; }
+
+  .footer-top { flex-direction: column; gap: 2rem; }
+  .footer-tagline { max-width: 100%; }
+  .social-links { flex-direction: row; gap: 1.2rem; flex-wrap: wrap; }
+
+  #scroll-progress { display: none; }
+  .story-feed { padding: 0 20px; }
+  .stories-header { padding: 0 20px; }
+  #quote-break { padding: 4rem 0; }
+  .quote-text { font-size: clamp(1.6rem, 6vw, 40px); }
+}
+
+
+@media (max-width: 480px) {
+  .hero-btns { flex-direction: column; align-items: center; }
+  .btn { width: 100%; max-width: 280px; justify-content: center; }
+  .story-feed { gap: 3rem; }
+}
+
+/* ============================================================
+   VIDEO MODAL
+   ============================================================ */
+#video-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10,12,18,0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: modalIn 0.3s ease forwards;
+}
+#video-modal.active { display: flex; }
+@keyframes modalIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.modal-inner {
+  position: relative;
+  width: min(420px, 92vw);
+  aspect-ratio: 9/16;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+  animation: modalSlideIn 0.35s var(--ease-out) forwards;
+}
+@keyframes modalSlideIn {
+  from { transform: scale(0.92) translateY(24px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+.modal-inner iframe {
+  width: 100%; height: 100%;
+  border: none;
+}
+.modal-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(15,23,42,0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  z-index: 10;
+  line-height: 1;
+}
+.modal-close:hover {
+  background: rgba(201,161,91,0.8);
+  transform: scale(1.1);
+}
+
+/* Play hint on video card hover */
+.video-overlay {
+  cursor: pointer;
+}
+.video-play-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 5;
+  pointer-events: none;
+}
+.video-card:hover .video-play-hint { opacity: 1; }
+.play-hint-circle {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(201,161,91,0.85);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 32px rgba(201,161,91,0.4);
+  transform: scale(0.9);
+  transition: transform 0.3s var(--ease-out);
+}
+.video-card:hover .play-hint-circle { transform: scale(1); }
+.play-hint-circle svg {
+  width: 22px; height: 22px;
+  fill: #fff;
+  margin-left: 3px;
+}
+   ============================================================ */
+.orn-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 2rem 0;
+  opacity: 0.35;
+}
+.orn-divider-line {
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #D8C7A8);
+}
+.orn-divider-line.right {
+  background: linear-gradient(to left, transparent, #D8C7A8);
+}
+.orn-divider-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #C9A15B;
+  font-size: 10px;
+  letter-spacing: 6px;
+  animation: floatOrnDiv 12s ease-in-out infinite alternate;
+}
+@keyframes floatOrnDiv {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-3px); }
+  100% { transform: translateY(1px); }
+}
+.stories-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 4rem;
+  padding-top: 3.5rem;
+  border-top: 1px solid var(--border-soft);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.stories-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  height: 52px;
+  padding: 0 26px;
+  background: #1A2A44;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 14px;
+  transition: background 0.25s, transform 0.3s var(--ease-out), box-shadow 0.3s;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.stories-cta-btn svg {
+  width: 16px; height: 16px;
+  transition: transform 0.3s var(--ease-out);
+}
+.stories-cta-btn:hover {
+  background: #0F1B2D;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+}
+.stories-cta-btn:hover svg { transform: translateX(4px); }
+.stories-cta-note {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: #B8893E;
+}
+
+/* ============================================================
+   PLACEHOLDER VIDEO STYLES
+   ============================================================ */
+.video-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1rem;
+  background: linear-gradient(160deg, #1a2540 0%, #0f172a 40%, #162035 100%);
+}
+.placeholder-ornament {
+  width: 64px; height: 64px;
+  border: 1px solid rgba(201,161,91,0.4);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-style: italic;
+}
+.placeholder-note {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  text-align: center;
+  padding: 0 1rem;
+  line-height: 1.8;
+  font-family: var(--sans);
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div id="scroll-progress" aria-hidden="true">
+  <div class="sp-dot active" id="dot-0"></div>
+  <div class="sp-track"><div class="sp-fill" id="sp-fill"></div></div>
+  <div class="sp-dot" id="dot-1"></div>
+  <div class="sp-dot" id="dot-2"></div>
+</div>
+
+<!-- Nav -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">Nağıl <span>Noğul</span></a>
+  <ul class="nav-links">
+    <li><a href="#stories">Nağıllar</a></li>
+    <li><a href="#about">Haqqında</a></li>
+  </ul>
+</nav>
+
+<!-- ============================================================
+     SECTION 1 — HERO
+     ============================================================ -->
+<section id="hero">
+  <div class="hero-gradient" aria-hidden="true"></div>
+  <div class="hero-depth" aria-hidden="true"></div>
+
+  <!-- Top-left Azerbaijani ornament -->
+  <div class="hero-ornament tl" aria-hidden="true">
+    <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer L-bracket -->
+      <path d="M10 10 L180 10 L180 22 L22 22 L22 180 L10 180 Z" fill="#C9A15B"/>
+      <!-- Inner bracket -->
+      <path d="M40 40 L140 40 L140 52 L52 52 L52 140 L40 140 Z" fill="#C9A15B"/>
+      <!-- Corner diamond -->
+      <path d="M10 10 L26 26" stroke="#C9A15B" stroke-width="2"/>
+      <rect x="4" y="4" width="12" height="12" transform="rotate(45 10 10)" fill="#C9A15B"/>
+      <!-- Center medallion -->
+      <circle cx="95" cy="95" r="28" stroke="#C9A15B" stroke-width="1.5" fill="none"/>
+      <circle cx="95" cy="95" r="18" stroke="#C9A15B" stroke-width="1" fill="none"/>
+      <circle cx="95" cy="95" r="5" fill="#C9A15B"/>
+      <!-- Petals -->
+      <path d="M95 67 L99 85 L95 90 L91 85 Z" fill="#C9A15B" opacity="0.7"/>
+      <path d="M95 123 L99 105 L95 100 L91 105 Z" fill="#C9A15B" opacity="0.7"/>
+      <path d="M67 95 L85 99 L90 95 L85 91 Z" fill="#C9A15B" opacity="0.7"/>
+      <path d="M123 95 L105 99 L100 95 L105 91 Z" fill="#C9A15B" opacity="0.7"/>
+      <!-- Grid lines -->
+      <path d="M10 95 L180 95 M95 10 L95 180" stroke="#C9A15B" stroke-width="0.4" opacity="0.4"/>
+      <path d="M10 50 L50 10 M10 140 L140 10" stroke="#C9A15B" stroke-width="0.3" opacity="0.25"/>
+      <!-- Corner dots -->
+      <circle cx="10" cy="10" r="5" fill="#C9A15B"/>
+      <circle cx="180" cy="10" r="3" fill="#C9A15B"/>
+      <circle cx="10" cy="180" r="3" fill="#C9A15B"/>
+      <!-- Extended faint lines -->
+      <path d="M200 10 L280 10 M10 200 L10 280" stroke="#C9A15B" stroke-width="0.4" opacity="0.2"/>
+      <path d="M220 10 L220 30 M10 220 L30 220" stroke="#C9A15B" stroke-width="0.4" opacity="0.15"/>
+    </svg>
+  </div>
+
+  <!-- Bottom-right Azerbaijani ornament (mirrored) -->
+  <div class="hero-ornament br" aria-hidden="true">
+    <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 10 L180 10 L180 22 L22 22 L22 180 L10 180 Z" fill="#C9A15B"/>
+      <path d="M40 40 L140 40 L140 52 L52 52 L52 140 L40 140 Z" fill="#C9A15B"/>
+      <rect x="4" y="4" width="12" height="12" transform="rotate(45 10 10)" fill="#C9A15B"/>
+      <circle cx="95" cy="95" r="28" stroke="#C9A15B" stroke-width="1.5" fill="none"/>
+      <circle cx="95" cy="95" r="18" stroke="#C9A15B" stroke-width="1" fill="none"/>
+      <circle cx="95" cy="95" r="5" fill="#C9A15B"/>
+      <path d="M95 67 L99 85 L95 90 L91 85 Z" fill="#C9A15B" opacity="0.7"/>
+      <path d="M95 123 L99 105 L95 100 L91 105 Z" fill="#C9A15B" opacity="0.7"/>
+      <path d="M67 95 L85 99 L90 95 L85 91 Z" fill="#C9A15B" opacity="0.7"/>
+      <path d="M123 95 L105 99 L100 95 L105 91 Z" fill="#C9A15B" opacity="0.7"/>
+      <path d="M10 95 L180 95 M95 10 L95 180" stroke="#C9A15B" stroke-width="0.4" opacity="0.4"/>
+      <circle cx="10" cy="10" r="5" fill="#C9A15B"/>
+      <circle cx="180" cy="10" r="3" fill="#C9A15B"/>
+      <circle cx="10" cy="180" r="3" fill="#C9A15B"/>
+      <path d="M200 10 L280 10 M10 200 L10 280" stroke="#C9A15B" stroke-width="0.4" opacity="0.2"/>
+    </svg>
+  </div>
+
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Xalq Nağılları</div>
+
+    <h1 class="hero-title">
+      <span class="line1">Yazılan nağıllar çoxdur,</span>
+      <span class="line2">sən inanacağını dinlə.</span>
+    </h1>
+
+    <div class="hero-divider"></div>
+
+    <p class="hero-sub">
+      Qədim nağılları yeni nəfəs ilə yenidən danışılır
+    </p>
+
+    <div class="hero-btns">
+      <a href="#stories" class="btn btn-primary">
+        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        Nağıl aləminə daxil ol
+      </a>
+    </div>
+  </div>
+
+
+</section>
+
+<!-- ============================================================
+     SECTION 2 — STORY FEED
+     HOW TO ADD REAL VIDEOS:
+     1. Remove the entire <div class="video-placeholder">...</div>
+     2. Add: <video src="your-video.mp4" muted loop playsinline></video>
+        right before the <div class="video-overlay"> line.
+     Videos will autoplay/pause automatically via Intersection Observer.
+     ============================================================ -->
+<div class="orn-divider" aria-hidden="true">
+  <span class="orn-divider-line"></span>
+  <span class="orn-divider-center">✦ &nbsp; ✦ &nbsp; ✦</span>
+  <span class="orn-divider-line right"></span>
+</div>
+
+<section id="stories">
+  <div class="stories-header">
+    <h2 class="section-heading reveal reveal-delay-1">Hekayələrin Dünyası</h2>
+    <p class="reveal reveal-delay-2">Hər biri bir dövrün ruhu, bir xalqın yaddaşı.</p>
+  </div>
+
+  <div class="story-feed">
+
+    <!-- STORY 01 — Dədə Qorqud -->
+    <div class="story-item" data-story="1">
+      <div class="video-card" data-video-index="0">
+        <div class="video-card-glow"></div>
+        <!-- REPLACE THIS PLACEHOLDER WITH YOUR VIDEO:
+             <video src="videos/dede-qorqud.mp4" muted loop playsinline></video> -->
+          <iframe id="yt-0" data-ytid="igXFMtsISmI" src="https://www.youtube.com/embed/igXFMtsISmI?autoplay=1&mute=1&loop=1&playlist=igXFMtsISmI&controls=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="video-overlay"></div>
+        <div class="video-play-hint">
+          <div class="play-hint-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="playing-badge">
+          <div class="eq-bars"><span></span><span></span><span></span></div>
+          Oynanır
+        </div>
+      </div>
+      <div class="story-text">
+        <h3 class="story-title">Burla Xatun</h3>
+        <p class="story-desc">
+          Oğuz dünyasının ən güclü qadını. Burla Xatun — ana sevgisini, igidliyi və sədaqəti bir ürəkdə birləşdirən əbədi bir obrazdır.
+        </p>
+        <div class="story-meta">
+          <span class="story-tag">Epik</span>
+          <span class="story-tag teal">Oğuz</span>
+          <span class="story-duration">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+            8 dəq
+          </span>
+        </div>
+      </div>
+      <div class="video-caption">
+        <h3 class="story-title">Burla Xatun</h3>
+      </div>
+    </div>
+
+    <!-- STORY 02 — Bamsı Beyrək -->
+    <div class="story-item reverse" data-story="2">
+      <div class="video-card" data-video-index="1">
+        <div class="video-card-glow"></div>
+        <!-- REPLACE: <video src="videos/bamsi-beyrek.mp4" muted loop playsinline></video> -->
+          <iframe id="yt-1" data-ytid="Qu8F_Gj0rCo" src="https://www.youtube.com/embed/Qu8F_Gj0rCo?autoplay=1&mute=1&loop=1&playlist=Qu8F_Gj0rCo&controls=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="video-overlay"></div>
+        <div class="video-play-hint">
+          <div class="play-hint-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="playing-badge">
+          <div class="eq-bars"><span></span><span></span><span></span></div>
+          Oynanır
+        </div>
+      </div>
+      <div class="story-text">
+        <h3 class="story-title">Göyçək Fatma</h3>
+        <p class="story-desc">
+          Gözəlliyi ilə deyil, ürəyinin dərinliyi ilə seçilən bir qadın. Göyçək Fatmanın hekayəsi — sevginin, səbrin və daxili gücün nağılıdır.
+        </p>
+        <div class="story-meta">
+          <span class="story-tag">Sevgi</span>
+          <span class="story-tag teal">Xalq</span>
+          <span class="story-duration">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+            11 dəq
+          </span>
+        </div>
+      </div>
+      <div class="video-caption">
+        <h3 class="story-title">Göyçək Fatma</h3>
+      </div>
+    </div>
+
+    <!-- STORY 03 — Koroğlu -->
+    <div class="story-item" data-story="3">
+      <div class="video-card" data-video-index="2">
+        <div class="video-card-glow"></div>
+        <!-- REPLACE: <video src="videos/koroglu.mp4" muted loop playsinline></video> -->
+          <iframe id="yt-2" data-ytid="NAs6owVg4Cw" src="https://www.youtube.com/embed/NAs6owVg4Cw?autoplay=1&mute=1&loop=1&playlist=NAs6owVg4Cw&controls=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="video-overlay"></div>
+        <div class="video-play-hint">
+          <div class="play-hint-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="playing-badge">
+          <div class="eq-bars"><span></span><span></span><span></span></div>
+          Oynanır
+        </div>
+      </div>
+      <div class="story-text">
+        <h3 class="story-title">Şəngülüm, Şüngülüm, Məngülüm</h3>
+        <p class="story-desc">
+          Üç bacının macərası, bir ananın həsrəti. Bu nağıl — sadəlövhlük, hiylə və sevginin bir-birinə dolaşdığı kövrək bir dünya rəsmidir.
+        </p>
+        <div class="story-meta">
+          <span class="story-tag">Uşaq</span>
+          <span class="story-tag teal">Nağıl</span>
+          <span class="story-duration">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+            14 dəq
+          </span>
+        </div>
+      </div>
+      <div class="video-caption">
+        <h3 class="story-title">Şəngülüm, Şüngülüm, Məngülüm</h3>
+      </div>
+    </div>
+
+    <!-- STORY 04 — Asli və Kərəm -->
+    <div class="story-item reverse" data-story="4">
+      <div class="video-card" data-video-index="3">
+        <div class="video-card-glow"></div>
+        <!-- REPLACE: <video src="videos/asli-kerem.mp4" muted loop playsinline></video> -->
+          <iframe id="yt-3" data-ytid="0kdxwGbWyK0" src="https://www.youtube.com/embed/0kdxwGbWyK0?autoplay=1&mute=1&loop=1&playlist=0kdxwGbWyK0&controls=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="video-overlay"></div>
+        <div class="video-play-hint">
+          <div class="play-hint-circle">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="playing-badge">
+          <div class="eq-bars"><span></span><span></span><span></span></div>
+          Oynanır
+        </div>
+      </div>
+      <div class="story-text">
+        <h3 class="story-title">Bamsı Beyrək</h3>
+        <p class="story-desc">
+          Sevgi, sədaqət və qəhrəmanlıq hekayəsi. Bamsı Beyrəyin macərası — Oğuz dünyasının ən sevimli eposlarından birinin vizual canlanmasıdır.
+        </p>
+        <div class="story-meta">
+          <span class="story-tag">Eşq</span>
+          <span class="story-tag teal">Epos</span>
+          <span class="story-duration">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+            9 dəq
+          </span>
+        </div>
+      </div>
+      <div class="video-caption">
+        <h3 class="story-title">Bamsı Beyrək</h3>
+      </div>
+    </div>
+
+  </div><!-- /.story-feed -->
+
+  <div class="stories-cta">
+    <a href="https://www.instagram.com/nagil_nogul" target="_blank" rel="noopener" class="stories-cta-btn">
+      <span>Daha çox</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<div id="quote-break">
+  <div class="quote-inner reveal">
+    <span class="quote-label">XALQ HİKMƏTİ</span>
+    <div class="quote-ornament">
+      <span class="quote-ornament-line"></span>
+      <span class="quote-ornament-star">✦</span>
+      <span class="quote-ornament-line right"></span>
+    </div>
+    <p class="quote-text">
+      "Hər nağıl bir həqiqətin<br>pıçıltısıdır."
+    </p>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 3 — ABOUT
+     ============================================================ -->
+<div class="orn-divider" aria-hidden="true">
+  <span class="orn-divider-line"></span>
+  <span class="orn-divider-center">✦ &nbsp; ✦ &nbsp; ✦</span>
+  <span class="orn-divider-line right"></span>
+</div>
+
+<section id="about">
+  <div class="about-inner">
+    <div class="about-left reveal">
+      <div class="section-tag">Haqqımızda</div>
+
+      <!-- LOGO IMAGE -->
+      <img src="hero-image.jpeg" alt="Nağıl Noğul" class="about-logo-img">
+
+
+      <div class="about-stats">
+        <div class="about-stat">
+          <span class="stat-num">12+</span>
+          <span class="stat-label">Nağıl canlandırıldı</span>
+        </div>
+        <div class="about-stat">
+          <span class="stat-num">5</span>
+          <span class="stat-label">Platforma</span>
+        </div>
+        <div class="about-stat">
+          <span class="stat-num">∞</span>
+          <span class="stat-label">Yaddaş yaşayır</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-right reveal reveal-delay-2">
+      <h2 class="section-heading">Qədim ruh, müasir toxunuş</h2>
+      <div class="about-body">
+        <p>
+          Biri var idi, biri yox idi... Əslində, onlar həmişə var idilər. Əsrlər boyu ocaq istisində isinən, nəsillərin yaddaşına pıçıldanan, nənələrin duaları tək saflaşan o qədim hekayələr heç vaxt yox olmadılar. Onlar sadəcə zamanın sükutuna çəkilib, yenidən doğulacaqları günü gözlədilər.
+        </p>
+        <p>
+          <em>Nağıl Noğul,</em> həmin sükutun bitdiyi nöqtədir.
+        </p>
+        <p>
+          Biz qədim nağıl irsini tozlu rəflərdən alıb, gələcəyin dili ilə yenidən canlandırdıq. Bu hekayələrin mayasında insan zəkası ilə süni intellektin harmoniyası dayansa da, ruhu eynidir: doğma, isti və dərin.
+        </p>
+        <p>
+          Çünki biz bilirik ki, texnologiya nə qədər dəyişsə də, <strong>bir xalqın yaddaşı və torpağın yuxusu olan o sehrli məna heç vaxt köhnəlmir.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 4 — FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">Nağıl <span>Noğul</span></div>
+        <p class="footer-tagline">Qədim nağıllar,<br>yeni nəfəslə yenidən danışılır.</p>
+      </div>
+      <div class="footer-social">
+        <div class="footer-social-label">Bizi izləyin</div>
+        <div class="social-links">
+          <a href="https://www.instagram.com/nagil_nogul" target="_blank" rel="noopener" class="social-link">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            Instagram
+          </a>
+          <a href="https://www.tiktok.com/@nagilnogul" target="_blank" rel="noopener" class="social-link">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
+            TikTok
+          </a>
+          <a href="https://youtube.com/@nagilnogul" target="_blank" rel="noopener" class="social-link">
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            YouTube
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61584612951753" target="_blank" rel="noopener" class="social-link">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.532-4.697 1.313 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+            Facebook
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Nağıl Noğul. Bütün hüquqlar qorunur.</span>
+      <span class="footer-craft">Söz ilə, sevgi ilə yaradılmışdır.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── Nav sticky ── */
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('stuck', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ── Scroll progress ── */
+  const spFill = document.getElementById('sp-fill');
+  const sections = ['hero','stories','about'];
+  const dots = [
+    document.getElementById('dot-0'),
+    document.getElementById('dot-1'),
+    document.getElementById('dot-2'),
+  ];
+
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct   = total > 0 ? (window.scrollY / total) * 100 : 0;
+    spFill.style.height = pct + '%';
+
+    sections.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const active = rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+      dots[i].classList.toggle('active', active);
+    });
+  }, { passive: true });
+
+  /* ── Particles ── */
+  (function initParticles() {
+    const canvas = document.getElementById('particle-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, pts = [];
+
+    function resize() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resize, { passive: true });
+    resize();
+
+    function mkPt() {
+      const dur = 20000 + Math.random() * 20000; // 20s–40s
+      return {
+        x:     Math.random() * W,
+        y:     H + Math.random() * 20,
+        r:     Math.random() * 1.5 + 0.5,        // 0.5–2px
+        vx:    (Math.random() - 0.5) * 0.12,
+        vy:    -(H / dur * 16),                   // slow upward
+        alpha: Math.random() * 0.18 + 0.04,       // very low opacity
+        fade:  0.00008 + Math.random() * 0.00006,
+      };
+    }
+
+    for (let i = 0; i < 35; i++) {
+      const p = mkPt();
+      p.y = Math.random() * H;
+      pts.push(p);
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      pts.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= p.fade;
+        if (p.alpha <= 0 || p.y < -6) { pts[i] = mkPt(); return; }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201,161,91,${p.alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(tick);
+    }
+    tick();
+  })();
+
+  /* ── Generic reveal ── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  /* ── Story item reveal ── */
+  const storyItems = document.querySelectorAll('.story-item');
+  const storyObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        storyObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  storyItems.forEach(el => storyObs.observe(el));
+
+  /* ── Video autoplay via Intersection Observer ──────────────
+     
+     TO ADD REAL VIDEOS:
+     ─────────────────────────────────────────────────────────
+     1. Open the HTML and find the story card you want to update.
+     2. Delete the entire <div class="video-placeholder">...</div> block.
+     3. Add this line RIGHT BEFORE <div class="video-overlay">:
+        <video src="videos/your-file.mp4" muted loop playsinline></video>
+     4. The Intersection Observer below will handle autoplay/pause.
+     ────────────────────────────────────────────────────────── */
+  const videoCards = document.querySelectorAll('.video-card');
+
+  const videoObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const card  = entry.target;
+      const video = card.querySelector('video');
+      if (entry.isIntersecting) {
+        card.classList.add('active');
+        if (video) video.play().catch(() => {});
+      } else {
+        card.classList.remove('active');
+        if (video) video.pause();
+      }
+    });
+  }, {
+    threshold: 0.45,
+    rootMargin: '-5% 0px -5% 0px',
+  });
+
+  videoCards.forEach(c => videoObs.observe(c));
+
+  /* ── Video Modal ── */
+  const modal       = document.getElementById('video-modal');
+  const modalIframe = document.getElementById('modal-iframe');
+  const modalClose  = document.getElementById('modal-close-btn');
+
+  /* ── Video Modal ── */
+  const modal       = document.getElementById('video-modal');
+  const modalIframe = document.getElementById('modal-iframe');
+  const modalClose  = document.getElementById('modal-close-btn');
+
+  if (modal && modalIframe && modalClose) {
+    const ytIds = {
+      'yt-0': 'igXFMtsISmI',
+      'yt-1': 'Qu8F_Gj0rCo',
+      'yt-2': 'NAs6owVg4Cw',
+      'yt-3': '0kdxwGbWyK0',
+    };
+
+    function openModal(ytId) {
+      modalIframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      modalIframe.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.video-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const iframe = card.querySelector('iframe');
+        if (!iframe) return;
+        const ytId = ytIds[iframe.id];
+        if (ytId) openModal(ytId);
+      });
+    });
+
+    modalClose.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  }
+
+})();
+</script>
+<!-- Video Modal -->
+<div id="video-modal" role="dialog" aria-modal="true">
+  <div class="modal-inner">
+    <button class="modal-close" id="modal-close-btn" aria-label="Bağla">✕</button>
+    <iframe id="modal-iframe" src="" frameborder="0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+  </div>
+</div>
+
+</body>
+</html>
