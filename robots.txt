@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fidancfr-blip.github.io/nagil-nogul/sitemap.xml
